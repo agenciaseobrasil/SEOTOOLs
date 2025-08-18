@@ -100,7 +100,7 @@ export async function POST(req){
     const base = new URL(url);
     const links = aEls.map(a=>{
       const href = a.getAttribute('href');
-      if (!href || href.startsWith('#') || href.startswith == 'javascript:') return null;
+      if (!href || href.startsWith('#') || href.startsWith('javascript:')) return null;
       let abs;
       try { abs = new URL(href, base).href; } catch { return null; }
       const rel = (a.getAttribute('rel')||'').toLowerCase();
@@ -172,7 +172,7 @@ export async function POST(req){
     if (!report.h1HasKW) rec.push('Inclua a palavra-chave no H1.');
     if (!report.metaDescriptionHasKW) rec.push('Inclua a palavra-chave na meta description (120–170 caracteres).');
     if (report.wordCount < 800) rec.push('Amplie o conteúdo para pelo menos 800–1200 palavras.');
-    if (report.keywordDensity < 0.5 or report.keywordDensity > 2.5) rec.push('Ajuste a densidade da palavra‑chave para ~0,5%–2,5%.');
+    if (report.keywordDensity < 0.5 || report.keywordDensity > 2.5) rec.push('Ajuste a densidade da palavra‑chave para ~0,5%–2,5%.');
     if (report.imagesMissingAlt > 0) rec.push('Adicione atributos ALT descritivos às imagens.');
     if (!report.canonical) rec.push('Defina uma tag canonical.');
     if (!report.openGraphPresent) rec.push('Implemente meta tags Open Graph.');
