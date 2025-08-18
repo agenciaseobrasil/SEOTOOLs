@@ -7,7 +7,7 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  async function handleAnalyze(e) {
+  async function handleAnalyze(e: React.FormEvent) {
     e.preventDefault();
     setError('');
     if (!url || !kw) { setError('Informe a URL e a palavra‑chave.'); return; }
@@ -21,7 +21,7 @@ export default function Page() {
       const data = await res.json();
       if (!res.ok || !data?.ok) throw new Error(data?.error || 'Falha na análise');
       window.location.href = `/relatorio/${data.reportId}`;
-    } catch (err) {
+    } catch (err: any) {
       setError(String(err.message || err));
     } finally {
       setLoading(false);
@@ -34,9 +34,9 @@ export default function Page() {
       <p style={{color:'#444', marginTop:0}}>Gere um relatório público indexável com Score e checklist on‑page. </p>
       <form onSubmit={handleAnalyze} className="card" style={{marginTop:16}}>
         <label>URL</label>
-        <input type="url" placeholder="https://exemplo.com/pagina" value={url} onChange={e=>setUrl(e.target.value)} />
+        <input type="url" placeholder="https://exemplo.com/pagina" value={url} onChange={(e)=>setUrl(e.target.value)} />
         <label style={{marginTop:12}}>Palavra‑chave</label>
-        <input type="text" placeholder="ex.: comprar tênis nike" value={kw} onChange={e=>setKw(e.target.value)} />
+        <input type="text" placeholder="ex.: comprar tênis nike" value={kw} onChange={(e)=>setKw(e.target.value)} />
         <div style={{display:'flex', gap:8, marginTop:16}}>
           <button type="submit" disabled={loading}>{loading ? 'Analisando…' : 'Analisar'}</button>
           {error && <div style={{color:'#b00020', padding:'10px'}}>{error}</div>}

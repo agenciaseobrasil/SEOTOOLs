@@ -1,13 +1,13 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-function DL({label, value}){
+function DL({label, value}: {label: string, value: any}){
   return <div><b>{label}:</b> {value}</div>;
 }
 
-export default function ReportPage({ params }){
+export default function ReportPage({ params }: { params: { id: string } }){
   const { id } = params;
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<any>(null);
   const [err, setErr] = useState('');
 
   useEffect(()=>{
@@ -17,7 +17,7 @@ export default function ReportPage({ params }){
         const json = await res.json();
         if(!res.ok) throw new Error(json?.error || 'Falha ao carregar');
         setData(json);
-      }catch(e){ setErr(String(e.message || e)); }
+      }catch(e: any){ setErr(String(e.message || e)); }
     })();
   },[id]);
 
@@ -28,10 +28,10 @@ export default function ReportPage({ params }){
   const links = data.links || [];
 
   function downloadCSV(){
-    const headers = Object.keys(r.csvResumo[0]);
+    const headers = Object.keys(r.csvResumo[0] || {});
     const lines = [headers.join(',')];
     for(const row of r.csvResumo){
-      lines.push(headers.map(h => {
+      lines.push(headers.map((h: string) => {
         const v = row[h] ?? ''; const s = String(v).replace(/"/g,'""');
         return /[",\n]/.test(s) ? `"${s}"` : s;
       }).join(','));
@@ -46,7 +46,7 @@ export default function ReportPage({ params }){
       const h2 = Object.keys(links[0]);
       const L = [h2.join(',')];
       for(const row of links){
-        L.push(h2.map(h => {
+        L.push(h2.map((h: string) => {
           const v = row[h] ?? ''; const s = String(v).replace(/"/g,'""');
           return /[",\n]/.test(s) ? `"${s}"` : s;
         }).join(','));
@@ -77,7 +77,7 @@ export default function ReportPage({ params }){
       <div className="card" style={{marginTop:16}}>
         <h3 style={{marginTop:0}}>Checklist priorizado</h3>
         <ul>
-          {r.recommendations.map((it, i)=> <li key={i}>{it}</li>)}
+          {r.recommendations.map((it: string, i: number)=> <li key={i}>{it}</li>)}
         </ul>
       </div>
 
@@ -87,7 +87,7 @@ export default function ReportPage({ params }){
           <table>
             <thead><tr><th>Anchor</th><th>Destino</th><th>Nofollow</th><th>Status</th><th>Quebrado</th></tr></thead>
             <tbody>
-              {links.slice(0,150).map((l,i)=>(
+              {links.slice(0,150).map((l: any, i: number)=>(
                 <tr key={i}>
                   <td>{l.anchor_text}</td>
                   <td><a href={l.destino_href} target="_blank">{l.destino_href}</a></td>
@@ -103,7 +103,7 @@ export default function ReportPage({ params }){
 
       <div style={{display:'flex', gap:8, marginTop:16}}>
         <button onClick={downloadCSV}>Baixar CSVs</button>
-        <button onClick={()=>navigator.clipboard.writeText(`<iframe src='${location.origin}/relatorio/${id}' width='100%' height='800' style='border:0'></iframe>`) }>Copiar embed</button>
+        <button onClick={()=>navigator.clipboard.writeText(`<iframe src='${typeof window !== 'undefined' ? window.location.origin : ''}/relatorio/${id}' width='100%' height='800' style='border:0'></iframe>`) }>Copiar embed</button>
       </div>
 
       <div className="card" style={{marginTop:16}}>
