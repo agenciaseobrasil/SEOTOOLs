@@ -1,0 +1,13 @@
+* { box-sizing: border-box; }
+label { display:block; font-size:14px; margin:8px 0 4px; color:#444; }
+input, button { padding:10px 12px; }
+input[type=text], input[type=url]{ width:100%; border:1px solid #ddd; border-radius:8px; }
+button { border:0; border-radius:10px; background:#111; color:#fff; cursor:pointer; }
+button[disabled] { opacity:.6; cursor:not-allowed; }
+.card { border:1px solid #eee; border-radius:16px; padding:16px; box-shadow:0 6px 24px rgba(0,0,0,.06); }
+.grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
+.kpi { background:#fafafa; border-radius:12px; padding:12px; }
+.badge { display:inline-block; padding:6px 10px; border-radius:999px; background:#eef6ff; color:#004b8d; font-weight:600; font-size:12px; }
+pre { background:#0c0c0c; color:#bfe3ff; padding:12px; border-radius:10px; overflow:auto; }
+table { width:100%; border-collapse: collapse; }
+th, td { padding:8px; border-bottom:1px solid #eee; text-align:left; font-size:14px; }
